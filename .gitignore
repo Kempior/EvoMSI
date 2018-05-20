@@ -1,0 +1,4 @@
+bin/
+obj/
+*.mk
+Evo.txt

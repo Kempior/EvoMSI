@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="Evo" Version="10.0.0" InternalType="Console">
+  <VirtualDirectory Name="include">
+    <File Name="include/Application.hpp"/>
+    <VirtualDirectory Name="SFML">
+      <File Name="include/SFML/Window.hpp"/>
+      <File Name="include/SFML/System.hpp"/>
+      <File Name="include/SFML/OpenGL.hpp"/>
+      <File Name="include/SFML/Network.hpp"/>
+      <File Name="include/SFML/Main.hpp"/>
+      <File Name="include/SFML/Graphics.hpp"/>
+      <File Name="include/SFML/Config.hpp"/>
+      <File Name="include/SFML/Audio.hpp"/>
+      <VirtualDirectory Name="Window">
+        <File Name="include/SFML/Window/WindowStyle.hpp"/>
+        <File Name="include/SFML/Window/WindowHandle.hpp"/>
+        <File Name="include/SFML/Window/Window.hpp"/>
+        <File Name="include/SFML/Window/VideoMode.hpp"/>
+        <File Name="include/SFML/Window/Touch.hpp"/>
+        <File Name="include/SFML/Window/Sensor.hpp"/>
+        <File Name="include/SFML/Window/Mouse.hpp"/>
+        <File Name="include/SFML/Window/Keyboard.hpp"/>
+        <File Name="include/SFML/Window/Joystick.hpp"/>
+        <File Name="include/SFML/Window/GlResource.hpp"/>
+        <File Name="include/SFML/Window/Export.hpp"/>
+        <File Name="include/SFML/Window/Event.hpp"/>
+        <File Name="include/SFML/Window/ContextSettings.hpp"/>
+        <File Name="include/SFML/Window/Context.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="System">
+        <File Name="include/SFML/System/Vector3.inl"/>
+        <File Name="include/SFML/System/Vector3.hpp"/>
+        <File Name="include/SFML/System/Vector2.inl"/>
+        <File Name="include/SFML/System/Vector2.hpp"/>
+        <File Name="include/SFML/System/Utf.inl"/>
+        <File Name="include/SFML/System/Utf.hpp"/>
+        <File Name="include/SFML/System/Time.hpp"/>
+        <File Name="include/SFML/System/ThreadLocalPtr.inl"/>
+        <File Name="include/SFML/System/ThreadLocalPtr.hpp"/>
+        <File Name="include/SFML/System/ThreadLocal.hpp"/>
+        <File Name="include/SFML/System/Thread.inl"/>
+        <File Name="include/SFML/System/Thread.hpp"/>
+        <File Name="include/SFML/System/String.inl"/>
+        <File Name="include/SFML/System/String.hpp"/>
+        <File Name="include/SFML/System/Sleep.hpp"/>
+        <File Name="include/SFML/System/NonCopyable.hpp"/>
+        <File Name="include/SFML/System/NativeActivity.hpp"/>
+        <File Name="include/SFML/System/Mutex.hpp"/>
+        <File Name="include/SFML/System/MemoryInputStream.hpp"/>
+        <File Name="include/SFML/System/Lock.hpp"/>
+        <File Name="include/SFML/System/InputStream.hpp"/>
+        <File Name="include/SFML/System/FileInputStream.hpp"/>
+        <File Name="include/SFML/System/Export.hpp"/>
+        <File Name="include/SFML/System/Err.hpp"/>
+        <File Name="include/SFML/System/Clock.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Network">
+        <File Name="include/SFML/Network/UdpSocket.hpp"/>
+        <File Name="include/SFML/Network/TcpSocket.hpp"/>
+        <File Name="include/SFML/Network/TcpListener.hpp"/>
+        <File Name="include/SFML/Network/SocketSelector.hpp"/>
+        <File Name="include/SFML/Network/SocketHandle.hpp"/>
+        <File Name="include/SFML/Network/Socket.hpp"/>
+        <File Name="include/SFML/Network/Packet.hpp"/>
+        <File Name="include/SFML/Network/IpAddress.hpp"/>
+        <File Name="include/SFML/Network/Http.hpp"/>
+        <File Name="include/SFML/Network/Ftp.hpp"/>
+        <File Name="include/SFML/Network/Export.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Graphics">
+        <File Name="include/SFML/Graphics/View.hpp"/>
+        <File Name="include/SFML/Graphics/VertexArray.hpp"/>
+        <File Name="include/SFML/Graphics/Vertex.hpp"/>
+        <File Name="include/SFML/Graphics/Transformable.hpp"/>
+        <File Name="include/SFML/Graphics/Transform.hpp"/>
+        <File Name="include/SFML/Graphics/Texture.hpp"/>
+        <File Name="include/SFML/Graphics/Text.hpp"/>
+        <File Name="include/SFML/Graphics/Sprite.hpp"/>
+        <File Name="include/SFML/Graphics/Shape.hpp"/>
+        <File Name="include/SFML/Graphics/Shader.hpp"/>
+        <File Name="include/SFML/Graphics/RenderWindow.hpp"/>
+        <File Name="include/SFML/Graphics/RenderTexture.hpp"/>
+        <File Name="include/SFML/Graphics/RenderTarget.hpp"/>
+        <File Name="include/SFML/Graphics/RenderStates.hpp"/>
+        <File Name="include/SFML/Graphics/RectangleShape.hpp"/>
+        <File Name="include/SFML/Graphics/Rect.inl"/>
+        <File Name="include/SFML/Graphics/Rect.hpp"/>
+        <File Name="include/SFML/Graphics/PrimitiveType.hpp"/>
+        <File Name="include/SFML/Graphics/Image.hpp"/>
+        <File Name="include/SFML/Graphics/Glyph.hpp"/>
+        <File Name="include/SFML/Graphics/Glsl.inl"/>
+        <File Name="include/SFML/Graphics/Glsl.hpp"/>
+        <File Name="include/SFML/Graphics/Font.hpp"/>
+        <File Name="include/SFML/Graphics/Export.hpp"/>
+        <File Name="include/SFML/Graphics/Drawable.hpp"/>
+        <File Name="include/SFML/Graphics/ConvexShape.hpp"/>
+        <File Name="include/SFML/Graphics/Color.hpp"/>
+        <File Name="include/SFML/Graphics/CircleShape.hpp"/>
+        <File Name="include/SFML/Graphics/BlendMode.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Audio">
+        <File Name="include/SFML/Audio/SoundStream.hpp"/>
+        <File Name="include/SFML/Audio/SoundSource.hpp"/>
+        <File Name="include/SFML/Audio/SoundRecorder.hpp"/>
+        <File Name="include/SFML/Audio/SoundFileWriter.hpp"/>
+        <File Name="include/SFML/Audio/SoundFileReader.hpp"/>
+        <File Name="include/SFML/Audio/SoundFileFactory.inl"/>
+        <File Name="include/SFML/Audio/SoundFileFactory.hpp"/>
+        <File Name="include/SFML/Audio/SoundBufferRecorder.hpp"/>
+        <File Name="include/SFML/Audio/SoundBuffer.hpp"/>
+        <File Name="include/SFML/Audio/Sound.hpp"/>
+        <File Name="include/SFML/Audio/OutputSoundFile.hpp"/>
+        <File Name="include/SFML/Audio/Music.hpp"/>
+        <File Name="include/SFML/Audio/Listener.hpp"/>
+        <File Name="include/SFML/Audio/InputSoundFile.hpp"/>
+        <File Name="include/SFML/Audio/Export.hpp"/>
+        <File Name="include/SFML/Audio/AlResource.hpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="src">
+    <File Name="src/Application.cpp"/>
+    <File Name="src/main.cpp"/>
+  </VirtualDirectory>
+  <Reconciliation>
+    <Regexes/>
+    <Excludepaths/>
+    <Ignorefiles/>
+    <Extensions>
+      <![CDATA[*.cpp;*.c;*.h;*.hpp;*.xrc;*.wxcp;*.fbp]]>
+    </Extensions>
+    <Topleveldir>/Users/Kempior/Desktop/Projects/Evo</Topleveldir>
+  </Reconciliation>
+  <Description/>
+  <Dependencies/>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="-std=c++11" C_Options="" Assembler="">
+        <IncludePath Value="./include"/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="./lib"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="MinGW ( TDM-GCC-64 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <Library Value="libsfml-graphics-d.a"/>
+        <Library Value="libsfml-window-d.a"/>
+        <Library Value="libsfml-system-d.a"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="./bin/Debug/$(ProjectName)" IntermediateDirectory="./obj/Debug" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="bin/Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">cp lib/*-d-2.dll ./bin/Debug</Command>
+        <Command Enabled="yes">cp assets/* ./bin/Debug</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="MinGW ( TDM-GCC-64 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <Library Value="libsfml-graphics.a"/>
+        <Library Value="libsfml-window.a"/>
+        <Library Value="libsfml-system.a"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="./bin/Release/$(ProjectName)" IntermediateDirectory="./obj/Release" Command="$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./bin/Release" PauseExecWhenProcTerminates="no" IsGUIProgram="yes" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">find lib/ -name *.dll -not -iname *-d-2.dll -exec cp '{}' ./bin/Release/ ';'</Command>
+        <Command Enabled="yes">cp assets/* ./bin/Release</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
