@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Evo" Version="10.0.0" InternalType="Console">
   <VirtualDirectory Name="include">
+    <VirtualDirectory Name="ServiceLocator">
+      <File Name="include/ServiceLocator/ResourceFont.hpp"/>
+      <File Name="include/ServiceLocator/Locator.hpp"/>
+      <File Name="include/ServiceLocator/DefaultResourceFont.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="GUI">
+      <File Name="include/GUI/Widgets.hpp"/>
+      <File Name="include/GUI/Widget.hpp"/>
+      <File Name="include/GUI/TextField.hpp"/>
+      <File Name="include/GUI/Label.hpp"/>
+      <File Name="include/GUI/Canvas.hpp"/>
+      <File Name="include/GUI/Button.hpp"/>
+      <File Name="include/GUI/Box.hpp"/>
+    </VirtualDirectory>
     <File Name="include/Application.hpp"/>
     <VirtualDirectory Name="SFML">
       <File Name="include/SFML/Window.hpp"/>
@@ -119,6 +133,18 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
+    <VirtualDirectory Name="GUI">
+      <File Name="src/GUI/Widget.cpp"/>
+      <File Name="src/GUI/TextField.cpp"/>
+      <File Name="src/GUI/Label.cpp"/>
+      <File Name="src/GUI/Canvas.cpp"/>
+      <File Name="src/GUI/Button.cpp"/>
+      <File Name="src/GUI/Box.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="ServiceLocator">
+      <File Name="src/ServiceLocator/Locator.cpp"/>
+      <File Name="src/ServiceLocator/DefaultResourceFont.cpp"/>
+    </VirtualDirectory>
     <File Name="src/Application.cpp"/>
     <File Name="src/main.cpp"/>
   </VirtualDirectory>
