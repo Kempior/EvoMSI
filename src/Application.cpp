@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include "EvoLogic/Evo.h"
 
 //#include "ServiceLocator/Locator.hpp"
 //#include "ServiceLocator/DefaultResourceFont.hpp"
@@ -18,6 +19,11 @@ dist(-10, 10)
 	
 	//Locator::provideFont(new DefaultResourceFont());
 	setupGUI();
+	
+	Evo evo(10, 0, 10, 0, 10);
+	evo.fun1 = [](float x, float y) { return x; };
+	evo.fun2 = [](float x, float y) { return x; };
+	evo.NextGeneration();
 }
 
 Application::~Application()

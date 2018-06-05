@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="Evo" Version="10.0.0" InternalType="Console">
   <VirtualDirectory Name="include">
+    <VirtualDirectory Name="EvoLogic">
+      <File Name="include/EvoLogic/Enums.h"/>
+      <File Name="include/EvoLogic/Population.h"/>
+      <File Name="include/EvoLogic/Evo.h"/>
+      <File Name="include/EvoLogic/Dot.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="ServiceLocator">
       <File Name="include/ServiceLocator/ResourceFont.hpp"/>
       <File Name="include/ServiceLocator/Locator.hpp"/>
@@ -133,6 +139,11 @@
     </VirtualDirectory>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
+    <VirtualDirectory Name="EvoLogic">
+      <File Name="src/EvoLogic/Population.cpp"/>
+      <File Name="src/EvoLogic/Evo.cpp"/>
+      <File Name="src/EvoLogic/Dot.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="GUI">
       <File Name="src/GUI/Widget.cpp"/>
       <File Name="src/GUI/TextField.cpp"/>
