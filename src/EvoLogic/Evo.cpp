@@ -1,7 +1,7 @@
 #include "EvoLogic/Evo.h"
 
 
-Evo::Evo(int popSize, int minX, int maxX, int minY, int maxY) : popSize(popSize), pop(popSize, minX, maxX, minY, maxY) {}
+Evo::Evo(int popSize, int minX, int maxX, int minY, int maxY) : popSize(popSize), pop(popSize, minX, maxX, minY, maxY), costs(new std::vector<std::pair<float, float>>) {}
 
 void Evo::NextGeneration() {
 	switch (2) {
@@ -30,17 +30,19 @@ void Evo::NextGeneration() {
 	populationNumber++;
 }
 
-std::vector<std::pair<float, float>> Evo::Points() const {
+const std::vector<std::pair<float, float>> *Evo::Points() const {
 	return pop.Points();
 }
 
-std::vector<std::pair<float, float>> Evo::Costs() const {
-	std::vector<std::pair<float, float>> returnVal;
-	std::vector<std::pair<float, float>> points = Points();
+const std::vector<std::pair<float, float>> *Evo::Costs() const {
 	
-	for (auto &it : points) {
-		returnVal.push_back(std::make_pair(fun1(it.first, it.second), fun2(it.first, it.second)));
+	costs->clear();
+	
+	const std::vector<std::pair<float, float>> *points = Points();
+	
+	for (auto &it : *points) {
+		costs->push_back(std::make_pair(fun1(it.first, it.second), fun2(it.first, it.second)));
 	}
 	
-	return pop.Points();
+	costs.get();
 }

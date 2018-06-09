@@ -14,7 +14,7 @@
 
 const float PI_F = 3.14159265358979f;
 
-Population::Population(int popSize, float minX, float maxX, float minY, float maxY) : size(popSize) {
+Population::Population(int popSize, float minX, float maxX, float minY, float maxY) : points(new std::vector<std::pair<float, float>>), size(popSize) {
 	constraints = new float[4] {minX, maxX, minY, maxY};
 	
 	std::mt19937 gen(time(NULL));	//Standard mersenne_twister_engine
@@ -43,14 +43,15 @@ void Population::PrintElements(float (*fun)(float x, float y)) {
 	}
 }
 
-std::vector<std::pair<float, float>> Population::Points() const {
-	std::vector<std::pair<float, float>> returnVal;
+const std::vector<std::pair<float, float>> *Population::Points() const {
+	
+	points->clear();
 	
 	for (auto &it : population) {
-		returnVal.push_back(std::make_pair(it.x, it.y));
+		points->push_back(std::make_pair(it.x, it.y));
 	}
 	
-	return returnVal;
+	return points.get();
 }
 
 void Population::SelectInPlace(std::vector<Dot> &vec, float (*fun)(float x, float y), float howMany) {

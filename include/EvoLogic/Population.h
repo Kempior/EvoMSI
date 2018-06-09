@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <array>
+#include <memory>
 #include "Dot.h"
 
 class Population {
@@ -13,6 +14,8 @@ private:
 	std::vector<Dot> RecombineAndReturn(int howMany);
 	void SelectInPlace(std::vector<Dot> &vec, float (*fun)(float x, float y), float howMany);
 	
+	std::unique_ptr<std::vector<std::pair<float, float>>> points;
+	
 public:
 	int size;
 	
@@ -21,7 +24,7 @@ public:
 	void PrintElements();
 	void PrintElements(float (*fun)(float x, float y));
 	
-	std::vector<std::pair<float, float>> Points() const;
+	const std::vector<std::pair<float, float>> *Points() const;
 	
 	// Yes, hardcoded to use 1 or 2 functions. Using a vector would be too much effort for this project. Also, nobody is ever gonna use it.
 	// Destroys all elements that weren't selected
