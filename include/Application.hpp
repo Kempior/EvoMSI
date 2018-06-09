@@ -6,7 +6,7 @@
 #include <vector>
 #include <random>
 
-//class Canvas;
+class Canvas;
 
 class Application
 {
@@ -18,10 +18,11 @@ public:
 	
 private:
 	void setupGUI();
+	void setupGraphs();
 	
 private:
 	sf::RenderWindow window;
-	//Canvas* canvas;
+	Canvas* canvas;
 
 	std::minstd_rand0 generator;
 	std::uniform_int_distribution<int> dist;

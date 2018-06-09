@@ -1,14 +1,15 @@
-#ifndef BOX_HPP
-#define BOX_HPP
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
 
 #include "GUI/Widget.hpp"
 
 #include <string>
+#include <vector>
 
-class Box : public Widget
+class Graph : public Widget
 {
 public:
-	Box(std::string name, sf::FloatRect rect);
+	Graph(std::string name, sf::FloatRect rect);
 	
 	void handleEvent(const sf::Event& event) override;
 	void update(float dt) override;
@@ -20,11 +21,18 @@ public:
 	
 	void recalculateSize() override;
 	
+	void setPoints(const std::vector<std::pair<float, float>>* points);
+	
 private:
 	sf::Vector2f position;
 	sf::Vector2f size;
 	
 	sf::FloatRect rect;
+	sf::View graphView;
+	
+	const std::vector<std::pair<float, float>> *points;
+	
+	sf::CircleShape circle;
 };
 
-#endif //BOX_HPP
+#endif //GRAPH_HPP

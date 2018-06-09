@@ -51,6 +51,7 @@ void Widget::addChildWidget(Widget* widget)
 {
 	widget->parent = this;
 	childWidgets.push_back(widget);
+	widget->recalculateSize();
 	widget->recalculatePosition();
 }
 

@@ -4,5 +4,4 @@
 #include "GUI/Button.hpp"
 #include "GUI/TextField.hpp"
 #include "GUI/Box.hpp"
-#include "GUI/HistoryGraph.hpp"
-#include "GUI/GeometryGraph.hpp"
+#include "GUI/Graph.hpp"
