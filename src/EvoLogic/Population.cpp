@@ -83,7 +83,7 @@ void Population::Select(float (*f1)(float x, float y), float (*f2)(float x, floa
 	SelectInPlace(firstHalf, f1, howMany);
 	SelectInPlace(secondHalf, f2, howMany);
 	
-	population.erase(population.begin());
+	population.erase(population.begin(), population.end());
 	
 	population.insert(population.end(), firstHalf.begin(), firstHalf.end());
 	population.insert(population.end(), secondHalf.begin(), secondHalf.end());

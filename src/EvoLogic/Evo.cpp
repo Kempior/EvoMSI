@@ -44,5 +44,5 @@ const std::vector<std::pair<float, float>> *Evo::Costs() const {
 		costs->push_back(std::make_pair(fun1(it.first, it.second), fun2(it.first, it.second)));
 	}
 	
-	costs.get();
+	return costs.get();
 }

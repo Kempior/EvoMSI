@@ -12,7 +12,6 @@ private:
 	Population pop;
 	int populationNumber = 1;
 	
-	//std::unique_ptr<std::vector<std::pair<float, float>>> points;
 	std::unique_ptr<std::vector<std::pair<float, float>>> costs;
 	
 public:

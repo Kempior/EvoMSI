@@ -7,6 +7,7 @@
 //#include "GUI/Widgets.hpp"
 
 #include <ctime>
+#include <iostream>
 
 Application::Application():
 generator(std::time(NULL)),
