@@ -23,8 +23,7 @@ public:
 	float operator() (const Dot &first, const Dot &second) const;
 	
 	// Please explain why the one in the comment doesnt't compile
-	//float (*fun) (float x, float y) = [] (float x, float y) { return 0.0; };
-	float (*fun) (float x, float y) = [] (float x, float y) { return x; };
+	float (*fun) (float x, float y) = [] (float x, float y) { return 0.0f; };
 };
 
 #endif

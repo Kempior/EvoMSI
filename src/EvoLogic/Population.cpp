@@ -4,11 +4,13 @@
 #include <utility>
 #include <algorithm>
 #include <cmath>
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
 #include "EvoLogic/Population.h"
 #include "EvoLogic/Dot.h"
 #include "EvoLogic/Enums.h"
 
-#define DEBUG_POPULATION_CPP
+//#define DEBUG_POPULATION_CPP
 
 const float PI_F = 3.14159265358979f;
 
@@ -41,13 +43,28 @@ void Population::PrintElements(float (*fun)(float x, float y)) {
 	}
 }
 
-void Population::Select(float (*fun)(float x, float y), float howMany) {
+std::vector<std::pair<float, float>> Population::Points() const {
+	std::vector<std::pair<float, float>> returnVal;
+	
+	for (auto &it : population) {
+		returnVal.push_back(std::make_pair(it.x, it.y));
+	}
+	
+	return returnVal;
+}
+
+void Population::SelectInPlace(std::vector<Dot> &vec, float (*fun)(float x, float y), float howMany) {
 	
 	DotComparator comparator(fun);
-	std::sort(population.begin(), population.end(), comparator);
+	std::sort(vec.begin(), vec.end(), comparator);
 	
-	int keptElements = (int)(population.size() * howMany);
-	population.erase(population.begin() + keptElements, population.end());
+	int keptElements = (int)(vec.size() * howMany);
+	vec.erase(vec.begin() + keptElements, vec.end());
+}
+
+void Population::Select(float (*fun)(float x, float y), float howMany) {
+	
+	SelectInPlace(population, fun, howMany);
 	
 #ifdef DEBUG_POPULATION_CPP
 	std::cout << "\n\nSelecting (one function)\n";
@@ -57,6 +74,23 @@ void Population::Select(float (*fun)(float x, float y), float howMany) {
 
 void Population::Select(float (*f1)(float x, float y), float (*f2)(float x, float y), float howMany) {
 	
+	shuffle(population.begin(), population.end(), std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count()));
+	
+	std::vector<Dot> firstHalf(population.begin(), population.begin() + population.size() / 2);
+	std::vector<Dot> secondHalf(population.begin() + population.size() / 2, population.end());
+	
+	SelectInPlace(firstHalf, f1, howMany);
+	SelectInPlace(secondHalf, f2, howMany);
+	
+	population.erase(population.begin());
+	
+	population.insert(population.end(), firstHalf.begin(), firstHalf.end());
+	population.insert(population.end(), secondHalf.begin(), secondHalf.end());
+	
+#ifdef DEBUG_POPULATION_CPP
+	std::cout << "\n\nSelecting (one function)\n";
+	PrintElements(fun);
+#endif
 }
 
 void Population::Mutate(float mutationMagnitude, float mutationChance) {
@@ -104,7 +138,7 @@ std::vector<Dot> Population::RecombineAndReturn(int howMany) {
 	std::mt19937 gen(time(NULL));	//Standard mersenne_twister_engine
 	
 	// Used to calculate the magnitude of change from the center of parents
-	std::uniform_real_distribution<> randMagnitude(0, 1);
+	//std::uniform_real_distribution<> randMagnitude(0, 1);
 	// Indexes of parents
 	std::uniform_int_distribution<> randIndex(0, population.size() - 1);
 	// For chance of rotation to right or left
@@ -126,15 +160,13 @@ std::vector<Dot> Population::RecombineAndReturn(int howMany) {
 		
 		if(randBool(gen)) {
 			// Rotation to the right from P2
-			float magnitude = randMagnitude(gen);
-			newDot.x = parentsCenter.x + magnitude * distToP2.y;
-			newDot.y = parentsCenter.y - magnitude * distToP2.x;
+			newDot.x = parentsCenter.x + distToP2.y;
+			newDot.y = parentsCenter.y - distToP2.x;
 		}
 		else {
 			// Rotation to the left from P2
-			float magnitude = randMagnitude(gen);
-			newDot.x = parentsCenter.x - magnitude * distToP2.y;
-			newDot.y = parentsCenter.y + magnitude * distToP2.x;
+			newDot.x = parentsCenter.x - distToP2.y;
+			newDot.y = parentsCenter.y + distToP2.x;
 		}
 		
 		if (newDot.x < constraints[(int)Constraint::minX] ||

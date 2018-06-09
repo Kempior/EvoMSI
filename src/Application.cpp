@@ -20,10 +20,7 @@ dist(-10, 10)
 	//Locator::provideFont(new DefaultResourceFont());
 	setupGUI();
 	
-	Evo evo(10, 0, 10, 0, 10);
-	evo.fun1 = [](float x, float y) { return x; };
-	evo.fun2 = [](float x, float y) { return x; };
-	evo.NextGeneration();
+	evo = new Evo(20, 0.1, 1, 0.1, 1);
 }
 
 Application::~Application()
@@ -67,6 +64,11 @@ void Application::run()
 		//canvas->draw(window);
 		
 		window.display();
+		
+		// Bull
+		evo->NextGeneration();
+		auto points = evo->Points();
+		auto costs = evo->Costs();
 	}
 }
 

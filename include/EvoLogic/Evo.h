@@ -16,6 +16,8 @@ public:
 	Evo(int popSize, int minX, int maxX, int minY, int maxY);
 	
 	void NextGeneration();
+	std::vector<std::pair<float, float>> Points() const;
+	std::vector<std::pair<float, float>> Costs() const;
 	
 	float (*fun1) (float x, float y) = [] (float x, float y) { return x; };
 	float (*fun2) (float x, float y) = [] (float x, float y) { return (1 + y) / x; };
