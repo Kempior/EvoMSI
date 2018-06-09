@@ -7,6 +7,8 @@
 #include "GUI/Widgets.hpp"
 
 #include <ctime>
+#include <thread>
+#include <chrono>
 
 Application::Application():
 generator(std::time(NULL)),
@@ -20,10 +22,10 @@ dist(-10, 10)
 	Locator::provideFont(new DefaultResourceFont());
 	setupGUI();
 	
-	Evo evo(10, 0, 10, 0, 10);
-	evo.fun1 = [](float x, float y) { return x; };
-	evo.fun2 = [](float x, float y) { return x; };
-	evo.NextGeneration();
+	evo = new Evo(20, 0.1, 1, 0.1, 1);
+	
+	canvas->getWidget<Graph>("Graph1")->setPoints(evo->Points());
+	canvas->getWidget<Graph>("Graph2")->setPoints(evo->Costs());
 }
 
 Application::~Application()
@@ -62,11 +64,20 @@ void Application::run()
 
 		canvas->update(0.0f);
 		
-		window.clear();
+		window.clear(sf::Color::White);
 		
 		canvas->draw(window);
 		
 		window.display();
+
+		// Bull
+		if(clock.getElapsedTime().asSeconds() >= 1.0f)
+		{
+			clock.restart();
+			evo->NextGeneration();
+		}
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 }
 

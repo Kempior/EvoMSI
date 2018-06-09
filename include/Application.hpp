@@ -1,6 +1,8 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+#include "EvoLogic/Evo.h"
+
 #include "SFML/Graphics.hpp"
 
 #include <vector>
@@ -26,6 +28,8 @@ private:
 
 	std::minstd_rand0 generator;
 	std::uniform_int_distribution<int> dist;
+	
+	Evo *evo;
 };
 
 #endif //APPLICATION_HPP

@@ -5,9 +5,10 @@ rect(rect)
 {
 	graphView.setViewport(rect);
 	graphView.setCenter(5.0f, -5.0f);
+	graphView.setSize(10.0f, 10.0f);
 	graphView.zoom(1.075f);
 	
-	circle.setRadius(1.0f);
+	circle.setRadius(0.05f);
 	circle.setFillColor(sf::Color::Red);
 }
 
@@ -29,7 +30,8 @@ void Graph::draw(sf::RenderWindow& window)
 	
 	for(auto point : *points)
 	{
-		circle.setPosition(point.first, point.second);
+		circle.setPosition(point.first, -point.second);
+		window.draw(circle);
 	}
 	
 	window.setView(currentView);
