@@ -4,6 +4,10 @@
 Evo::Evo(int popSize, int minX, int maxX, int minY, int maxY) : popSize(popSize), pop(popSize, minX, maxX, minY, maxY), costs(new std::vector<std::pair<float, float>>) {}
 
 void Evo::NextGeneration() {
+	
+	Points();
+	Costs();
+	
 	switch (2) {
 	case 0:
 		pop.Mutate(mutationMagnitude, mutationChance);
