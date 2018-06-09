@@ -13,6 +13,7 @@
       <File Name="include/ServiceLocator/DefaultResourceFont.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="GUI">
+      <File Name="include/GUI/Graph.hpp"/>
       <File Name="include/GUI/Widgets.hpp"/>
       <File Name="include/GUI/Widget.hpp"/>
       <File Name="include/GUI/TextField.hpp"/>
@@ -145,6 +146,7 @@
       <File Name="src/EvoLogic/Dot.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="GUI">
+      <File Name="src/GUI/Graph.cpp"/>
       <File Name="src/GUI/Widget.cpp"/>
       <File Name="src/GUI/TextField.cpp"/>
       <File Name="src/GUI/Label.cpp"/>

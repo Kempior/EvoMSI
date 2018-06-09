@@ -1,14 +1,14 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
+#include "EvoLogic/Evo.h"
+
 #include "SFML/Graphics.hpp"
 
 #include <vector>
 #include <random>
 
-#include "EvoLogic/Evo.h"
-
-//class Canvas;
+class Canvas;
 
 class Application
 {
@@ -20,10 +20,11 @@ public:
 	
 private:
 	void setupGUI();
+	void setupGraphs();
 	
 private:
 	sf::RenderWindow window;
-	//Canvas* canvas;
+	Canvas* canvas;
 
 	std::minstd_rand0 generator;
 	std::uniform_int_distribution<int> dist;
