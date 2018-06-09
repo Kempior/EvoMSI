@@ -30,8 +30,9 @@ private:
 	sf::FloatRect rect;
 	sf::View graphView;
 	
-	const std::vector<std::pair<float, float>> *points;
+	const std::vector<std::pair<float, float>> *points = nullptr;
 	
+	sf::RectangleShape horizontalLine, verticalLine;
 	sf::CircleShape circle;
 };
 

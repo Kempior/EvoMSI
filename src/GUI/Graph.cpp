@@ -8,6 +8,14 @@ rect(rect)
 	graphView.setSize(10.0f, 10.0f);
 	graphView.zoom(1.075f);
 	
+	const float lineSize = 0.04f;
+	
+	horizontalLine.setSize(sf::Vector2f(20.0f, lineSize));
+	verticalLine.setSize(sf::Vector2f(lineSize, -20.0f));
+	
+	horizontalLine.setFillColor(sf::Color::Black);
+	verticalLine.setFillColor(sf::Color::Black);
+	
 	circle.setRadius(0.05f);
 	circle.setFillColor(sf::Color::Red);
 }
@@ -28,10 +36,16 @@ void Graph::draw(sf::RenderWindow& window)
 	
 	window.setView(graphView);
 	
-	for(auto point : *points)
+	window.draw(horizontalLine);
+	window.draw(verticalLine);
+	
+	if(points)
 	{
-		circle.setPosition(point.first, -point.second);
-		window.draw(circle);
+		for(auto point : *points)
+		{
+			circle.setPosition(point.first, -point.second);
+			window.draw(circle);
+		}
 	}
 	
 	window.setView(currentView);

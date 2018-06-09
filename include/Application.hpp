@@ -19,7 +19,10 @@ public:
 	void run();
 	
 private:
+	void setupEvo();
+	void resetEvo();
 	void setupGUI();
+	void setupInfo();
 	void setupGraphs();
 	
 private:
@@ -29,7 +32,11 @@ private:
 	std::minstd_rand0 generator;
 	std::uniform_int_distribution<int> dist;
 	
-	Evo *evo;
+	Evo *evo = nullptr;
+	bool isSimulating = false;
+	int popSize = 200;
+	float mutationChance = 0.5f, mutationMagnitude = 0.25f;
+	float minX = 0.1f, minY = 0.1f, maxX = 10.0f, maxY = 10.0f;
 };
 
 #endif //APPLICATION_HPP
