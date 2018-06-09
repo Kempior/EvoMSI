@@ -6,6 +6,7 @@ Label::Label(std::string name): Widget(name)
 {
 	text.setFont(Locator::getResourceFont()->getFont());
 	text.setCharacterSize(16);
+	text.setFillColor(sf::Color::Black);
 }
 
 Label::Label(std::string name, std::string text): Label(name)

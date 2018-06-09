@@ -6,7 +6,8 @@ TextField::TextField(std::string name, sf::Vector2f size): Widget(name)
 {
 	setSize(size);
 	textFieldRect.setFillColor(sf::Color::White);
-	textFieldRect.setOutlineColor(sf::Color::Red);
+	textFieldRect.setOutlineColor(sf::Color::Black);
+	textFieldRect.setOutlineThickness(2.0f);
 	
 	text = new Label(name + "Label", "Enter text...");
 	text->setColor(sf::Color::Black);
@@ -26,7 +27,7 @@ void TextField::handleEvent(const sf::Event& event)
 			if(isSelected)
 			{
 				isSelected = false;
-				textFieldRect.setOutlineThickness(0.0f);
+				textFieldRect.setOutlineColor(sf::Color::Black);
 				if(validateFunc && !validateFunc(inputedText))
 				{
 					inputedText = oldText;
@@ -44,7 +45,7 @@ void TextField::handleEvent(const sf::Event& event)
 		else
 		{
 			isSelected = true;
-			textFieldRect.setOutlineThickness(2.0f);
+			textFieldRect.setOutlineColor(sf::Color::Red);
 			oldText = inputedText;
 			inputedText = "";
 		}

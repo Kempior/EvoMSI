@@ -9,6 +9,7 @@
 #include <ctime>
 #include <thread>
 #include <chrono>
+#include <regex>
 
 Application::Application():
 generator(std::time(NULL)),
@@ -160,6 +161,153 @@ void Application::setupInfo()
 		isSimulating = !isSimulating;
 		canvas->getWidget<Label>("PauseLabel")->setText(isSimulating ? "Pause" : "Unpause");
 	});
+	
+	//PopSize Text Field
+	TextField *textField = new TextField("PopSizeTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 40.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(popSize);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		popSize = atoi(textField->getText().c_str());
+	});
+	textField->setValidateFunc([](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("^([4-9]|[1-9]\\d{1,})$"));
+	});
+	
+	label = new Label("PopSizeLabel", "Pop Size");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MutationChance Text Field
+	textField = new TextField("MutationChanceTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 80.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(mutationChance).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		mutationChance = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?"));
+	});
+	
+	label = new Label("MutationChanceLabel", "Mutation Chance");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MutationMagnitude Text Field
+	textField = new TextField("MutationMagnitudeTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 120.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(mutationMagnitude).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		mutationMagnitude = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?"));
+	});
+	
+	label = new Label("MutationMagnitudeLabel", "Mutation Magnitude");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MinX Text Field
+	textField = new TextField("MinXTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 160.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(minX).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		minX = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([this, textField](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?")) && atof(textField->getText().c_str()) < maxX;
+	});
+	
+	label = new Label("MinXLabel", "Min X");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MaxX Text Field
+	textField = new TextField("MaxXTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 200.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(maxX).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		maxX = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([this, textField](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?")) && minX < atof(textField->getText().c_str());
+	});
+	
+	label = new Label("MaxXLabel", "Max X");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MinY Text Field
+	textField = new TextField("MinYTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 240.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(minY).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		minY = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([this, textField](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?")) && atof(textField->getText().c_str()) < maxY;
+	});
+	
+	label = new Label("MinYLabel", "Min Y");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
+	
+	//MaxY Text Field
+	textField = new TextField("MaxYTextField", sf::Vector2f(80.0f, 30.0f));
+	textField->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 280.0f), UPPER_LEFT);
+	infoBox->addChildWidget(textField);
+	textField->setTextSourceFunc([this]() -> std::string
+	{
+		return std::to_string(maxY).substr(0, 7);
+	});
+	textField->setDataUpdateFunc([this, textField]()
+	{
+		maxY = atof(textField->getText().c_str());
+	});
+	textField->setValidateFunc([this, textField](std::string str) -> bool
+	{
+		return std::regex_match(str, std::regex("([[:digit:]]+)(\\.(([[:digit:]]+)?))?")) && minY < atof(textField->getText().c_str());
+	});
+	
+	label = new Label("MaxYLabel", "Max Y");
+	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
+	textField->addChildWidget(label);
 }
 
 void Application::setupGraphs()
