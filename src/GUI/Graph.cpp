@@ -1,6 +1,8 @@
 #include "GUI/Graph.hpp"
 
-Graph::Graph(std::string name, sf::FloatRect rect): Widget(name),
+#include "GUI/Label.hpp"
+
+Graph::Graph(std::string name, sf::FloatRect rect, std::string axisX, std::string axisY): Widget(name),
 rect(rect)
 {
 	graphView.setViewport(rect);
@@ -18,6 +20,14 @@ rect(rect)
 	
 	circle.setRadius(0.05f);
 	circle.setFillColor(sf::Color::Red);
+	
+	Label *label = new Label(axisX + "Label", axisX);
+	label->setAnchor(sf::Vector2f(1.0f, 1.0f), sf::Vector2f(-5.0f, 0.0f), LOWER_RIGHT);
+	addChildWidget(label);
+	
+	label = new Label(axisY + "Label", axisY);
+	label->setAnchor(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, 3.0f), UPPER_LEFT);
+	addChildWidget(label);
 }
 
 void Graph::handleEvent(const sf::Event& event)
@@ -103,10 +113,7 @@ void Graph::recalculateSize()
 {
 	sf::Vector2f parentSize = parent->getSize();
 	
-	sf::Vector2f tl = sf::Vector2f(rect.left * parentSize.x, rect.top * parentSize.y);
-	sf::Vector2f br = sf::Vector2f(rect.width * parentSize.x, rect.height * parentSize.y);
-	
-	size = br - tl;
+	size = sf::Vector2f(rect.width * parentSize.x, rect.height * parentSize.y);
 	
 	Widget::recalculateSize();
 }

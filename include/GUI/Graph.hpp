@@ -9,7 +9,7 @@
 class Graph : public Widget
 {
 public:
-	Graph(std::string name, sf::FloatRect rect);
+	Graph(std::string name, sf::FloatRect rect, std::string axisX, std::string axisY);
 	
 	void handleEvent(const sf::Event& event) override;
 	void update(float dt) override;
