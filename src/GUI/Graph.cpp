@@ -76,10 +76,12 @@ void Graph::draw(sf::RenderWindow& window)
 			if(j == thisCircle || j == otherCircle)
 			{
 				circle.setFillColor(sf::Color::Blue);
+				circle.setRadius(0.1f);
 			}
 			else
 			{
 				circle.setFillColor(sf::Color::Red);
+				circle.setRadius(0.05f);
 			}
 			
 			circle.setPosition((*points)[i].first - circle.getRadius(), -(*points)[i].second - circle.getRadius());

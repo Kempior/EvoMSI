@@ -71,6 +71,7 @@ void Application::run()
 		{
 			clock.restart();
 			evo->NextGeneration();
+			canvas->getWidget<HistoryGraph>("HistoryGraph")->addValues();
 		}
 		
 		std::this_thread::sleep_for(std::chrono::milliseconds(16 - frameClock.restart().asMilliseconds()));
@@ -91,6 +92,10 @@ void Application::setupEvo()
 	
 	g1->otherGraph = g2;
 	g2->otherGraph = g1;
+	
+	HistoryGraph *historyGraph = canvas->getWidget<HistoryGraph>("HistoryGraph");
+	historyGraph->setPoints(evo->Costs());
+	historyGraph->addValues();
 }
 
 void Application::resetEvo()
@@ -100,12 +105,14 @@ void Application::resetEvo()
 	
 	canvas->getWidget<Graph>("Graph1")->setPoints(nullptr);
 	canvas->getWidget<Graph>("Graph2")->setPoints(nullptr);
+	canvas->getWidget<HistoryGraph>("HistoryGraph")->reset();
 }
 
 void Application::setupGUI()
 {
 	setupInfo();
 	setupGraphs();
+	setupHistoryGraph();
 }
 
 void Application::setupInfo()
@@ -325,4 +332,11 @@ void Application::setupGraphs()
 	graph = new Graph("Graph2", sf::FloatRect(0.60938f, 0.0f, 0.39063f, 0.69444f), "f1", "f2");
 	graph->setAnchor(sf::Vector2f(1.0f, 0.0f), sf::Vector2f(), UPPER_RIGHT);
 	canvas->addChildWidget(graph);
+}
+
+void Application::setupHistoryGraph()
+{
+	HistoryGraph *historyGraph = new HistoryGraph("HistoryGraph", sf::FloatRect(0.21875f, 0.69444f, 0.78125f, 0.30556f), "Iter", "f");
+	historyGraph->setAnchor(sf::Vector2f(1.0f, 1.0f), sf::Vector2f(), LOWER_RIGHT);
+	canvas->addChildWidget(historyGraph);
 }

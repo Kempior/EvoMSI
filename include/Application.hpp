@@ -24,6 +24,7 @@ private:
 	void setupGUI();
 	void setupInfo();
 	void setupGraphs();
+	void setupHistoryGraph();
 	
 private:
 	sf::RenderWindow window;

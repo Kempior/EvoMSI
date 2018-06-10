@@ -5,3 +5,4 @@
 #include "GUI/TextField.hpp"
 #include "GUI/Box.hpp"
 #include "GUI/Graph.hpp"
+#include "GUI/HistoryGraph.hpp"
