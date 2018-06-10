@@ -59,6 +59,7 @@ protected:
 protected:
 	Widget* parent = nullptr;
 	std::vector<Widget*> childWidgets;
+	static sf::Vector2u windowSize;
 	
 private:
 	std::string name;

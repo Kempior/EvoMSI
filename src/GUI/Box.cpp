@@ -44,4 +44,6 @@ void Box::recalculateSize()
 	sf::Vector2f br = sf::Vector2f(rect.width * parentSize.x, rect.height * parentSize.y);
 	
 	size = br - tl;
+	
+	Widget::recalculateSize();
 }

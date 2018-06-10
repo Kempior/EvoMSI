@@ -22,6 +22,25 @@ rect(rect)
 
 void Graph::handleEvent(const sf::Event& event)
 {
+	if(event.type == sf::Event::MouseMoved && otherGraph && points)
+	{
+		thisCircle = -1;
+		otherGraph->otherCircle = -1;
+		
+		sf::Vector2f mousePos = mapToViewSpace(event.mouseMove.x, event.mouseMove.y);
+		mousePos.y = -mousePos.y;
+		
+		for(unsigned int i = 0; i < points->size(); ++i)
+		{
+			if(pow(mousePos.x - (*points)[i].first, 2) + pow(mousePos.y - (*points)[i].second, 2) <= pow(0.05f, 2))
+			{
+				thisCircle = i;
+				otherGraph->otherCircle = i;
+				break;
+			}
+		}
+	}
+	
 	Widget::handleEvent(event);
 }
 
@@ -41,10 +60,22 @@ void Graph::draw(sf::RenderWindow& window)
 	
 	if(points)
 	{
-		for(auto point : *points)
+		int j = 0;
+		for(unsigned int i = 0; i < points->size(); ++i)
 		{
-			circle.setPosition(point.first, -point.second);
+			if(j == thisCircle || j == otherCircle)
+			{
+				circle.setFillColor(sf::Color::Blue);
+			}
+			else
+			{
+				circle.setFillColor(sf::Color::Red);
+			}
+			
+			circle.setPosition((*points)[i].first - circle.getRadius(), -(*points)[i].second - circle.getRadius());
 			window.draw(circle);
+			
+			++j;
 		}
 	}
 	
@@ -76,9 +107,27 @@ void Graph::recalculateSize()
 	sf::Vector2f br = sf::Vector2f(rect.width * parentSize.x, rect.height * parentSize.y);
 	
 	size = br - tl;
+	
+	Widget::recalculateSize();
 }
 
 void Graph::setPoints(const std::vector<std::pair<float, float>>* points)
 {
 	this->points = points;
+}
+
+sf::Vector2f Graph::mapToViewSpace(float x, float y)
+{
+	const sf::FloatRect &viewport = graphView.getViewport();
+	
+	sf::IntRect viewRect(static_cast<int>(0.5f + windowSize.x * viewport.left),
+						 static_cast<int>(0.5f + windowSize.y * viewport.top),
+						 static_cast<int>(0.5f + windowSize.x * viewport.width),
+						 static_cast<int>(0.5f + windowSize.y * viewport.height));
+	
+	sf::Vector2f normalized;
+	normalized.x = -1.0f + 2.0f * (x - viewRect.left) / viewRect.width;
+	normalized.y = 1.0f - 2.0f * (y - viewRect.top) / viewRect.height;
+	
+	return graphView.getInverseTransform().transformPoint(normalized);
 }

@@ -83,8 +83,14 @@ void Application::setupEvo()
 	evo->mutationChance = mutationChance;
 	evo->mutationMagnitude = mutationMagnitude;
 	
-	canvas->getWidget<Graph>("Graph1")->setPoints(evo->Points());
-	canvas->getWidget<Graph>("Graph2")->setPoints(evo->Costs());
+	Graph *g1 = canvas->getWidget<Graph>("Graph1");
+	Graph *g2 = canvas->getWidget<Graph>("Graph2");
+	
+	g1->setPoints(evo->Points());
+	g2->setPoints(evo->Costs());
+	
+	g1->otherGraph = g2;
+	g2->otherGraph = g1;
 }
 
 void Application::resetEvo()

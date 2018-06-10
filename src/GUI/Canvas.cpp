@@ -2,15 +2,16 @@
 
 Canvas::Canvas(sf::RenderWindow& window): Widget("Canvas")
 {
-	size = static_cast<sf::Vector2f>(window.getSize());
+	windowSize = window.getSize();
 }
 
 void Canvas::handleEvent(const sf::Event& event)
 {
 	if(event.type == sf::Event::Resized)
 	{
-		size = sf::Vector2f(event.size.width, event.size.height);
-		
+		windowSize.x = event.size.width;
+		windowSize.y = event.size.height;
+
 		recalculateSize();
 		recalculatePosition();
 	}
@@ -37,7 +38,7 @@ sf::Vector2f Canvas::getPosition()
 
 sf::Vector2f Canvas::getSize()
 {
-	return size;
+	return static_cast<sf::Vector2f>(windowSize);
 }
 
 void Canvas::setPosition(sf::Vector2f position)

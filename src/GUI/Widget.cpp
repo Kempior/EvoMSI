@@ -1,5 +1,7 @@
 #include "GUI/Widget.hpp"
 
+sf::Vector2u Widget::windowSize;
+
 Widget::Widget(std::string widgetName):
 name(widgetName)
 {

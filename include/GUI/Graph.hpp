@@ -24,11 +24,20 @@ public:
 	void setPoints(const std::vector<std::pair<float, float>>* points);
 	
 private:
+	sf::Vector2f mapToViewSpace(float x, float y);
+	
+public:
+	Graph *otherGraph = nullptr;
+	
+private:
 	sf::Vector2f position;
 	sf::Vector2f size;
 	
 	sf::FloatRect rect;
 	sf::View graphView;
+	
+	int thisCircle = -1;
+	int otherCircle = -1;
 	
 	const std::vector<std::pair<float, float>> *points = nullptr;
 	
