@@ -11,7 +11,7 @@ class Evo {
 private:
 	int popSize;
 	Population pop;
-	int populationNumber = 1;
+	int populationNumber = 0;
 	
 public:
 	Evo(int popSize, int minX, int maxX, int minY, int maxY);

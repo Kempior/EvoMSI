@@ -11,8 +11,6 @@ void Evo::NextGeneration() {
 	Points();
 	Costs();
 	
-	int choice = EvoTypes::ONE_FUN_SELECT | EvoTypes::YES_ELITE | EvoTypes::RECOMBINE_STANDARD;
-	
 	pop.Mutate(mutationMagnitude, mutationChance);
 	
 	// Select type
@@ -28,14 +26,14 @@ void Evo::NextGeneration() {
 		// No elite, recombination
 		if (evoType & EvoTypes::RECOMBINE_STANDARD)
 			pop.Recombine();
-		if (evoType & EvoTypes::RECOMBINE_CENTER)
+		else if (evoType & EvoTypes::RECOMBINE_CENTER)
 			pop.RecombineCenter();
 	}
 	else if (evoType & EvoTypes::YES_ELITE) {
 		// Elite, recombination
 		if (evoType & EvoTypes::RECOMBINE_STANDARD)
 			pop.RecombineWithElite();
-		if (choice & EvoTypes::RECOMBINE_CENTER)
+		else if (evoType & EvoTypes::RECOMBINE_CENTER)
 			pop.RecombineWithEliteCenter();
 	}
 	
