@@ -2,6 +2,7 @@
 #define APPLICATION_HPP
 
 #include "EvoLogic/Evo.h"
+#include "EvoLogic/Enums.h"
 
 #include "SFML/Graphics.hpp"
 
@@ -23,6 +24,7 @@ private:
 	void resetEvo();
 	void setupGUI();
 	void setupInfo();
+	void setupSelection();
 	void setupGraphs();
 	void setupHistoryGraph();
 	
@@ -38,6 +40,10 @@ private:
 	int popSize = 200;
 	float mutationChance = 0.5f, mutationMagnitude = 0.25f;
 	float minX = 0.1f, minY = 0.1f, maxX = 10.0f, maxY = 10.0f;
+	
+	EvoTypes selection = TWO_FUN_SELECT;
+	EvoTypes elite = YES_ELITE;
+	EvoTypes recombination = RECOMBINE_STANDARD;
 };
 
 #endif //APPLICATION_HPP

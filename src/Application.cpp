@@ -83,6 +83,7 @@ void Application::setupEvo()
 	evo = new Evo(popSize, minX, maxX, minY, maxY);
 	evo->mutationChance = mutationChance;
 	evo->mutationMagnitude = mutationMagnitude;
+	evo->evoType = selection | elite | recombination;
 	
 	Graph *g1 = canvas->getWidget<Graph>("Graph1");
 	Graph *g2 = canvas->getWidget<Graph>("Graph2");
@@ -111,6 +112,7 @@ void Application::resetEvo()
 void Application::setupGUI()
 {
 	setupInfo();
+	setupSelection();
 	setupGraphs();
 	setupHistoryGraph();
 }
@@ -121,59 +123,6 @@ void Application::setupInfo()
 	Box *infoBox = new Box("InfoBox", sf::FloatRect(0.0f, 0.0f, 0.21875f, 1.0f));
 	infoBox->setAnchor(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(), UPPER_LEFT);
 	canvas->addChildWidget(infoBox);
-	
-	//Start Button
-	Button *button = new Button("StartButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(), UPPER_LEFT);
-	infoBox->addChildWidget(button);
-	
-	Label *label = new Label("StartLabel", "Start");
-	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
-	button->addChildWidget(label);
-	
-	button->setFunc([this, button]()
-	{
-		setupEvo();
-		isSimulating = true;
-		canvas->getWidget<Button>("StartButton")->setIsActive(false);
-		canvas->getWidget<Button>("ResetButton")->setIsActive(true);
-		canvas->getWidget<Button>("PauseButton")->setIsActive(true);
-	});
-	
-	//Reset Button
-	button = new Button("ResetButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(), UPPER_LEFT);
-	button->setIsActive(false);
-	infoBox->addChildWidget(button);
-	
-	label = new Label("ResetLabel", "Reset");
-	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
-	button->addChildWidget(label);
-	
-	button->setFunc([this]()
-	{
-		resetEvo();
-		isSimulating = false;
-		canvas->getWidget<Button>("StartButton")->setIsActive(true);
-		canvas->getWidget<Button>("ResetButton")->setIsActive(false);
-		canvas->getWidget<Button>("PauseButton")->setIsActive(false);
-	});
-	
-	//Pause Button
-	button = new Button("PauseButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.97f, 0.02f), sf::Vector2f(), UPPER_RIGHT);
-	button->setIsActive(false);
-	infoBox->addChildWidget(button);
-	
-	label = new Label("PauseLabel", "Pause");
-	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
-	button->addChildWidget(label);
-	
-	button->setFunc([this]()
-	{
-		isSimulating = !isSimulating;
-		canvas->getWidget<Label>("PauseLabel")->setText(isSimulating ? "Pause" : "Unpause");
-	});
 	
 	//PopSize Text Field
 	TextField *textField = new TextField("PopSizeTextField", sf::Vector2f(80.0f, 30.0f));
@@ -192,7 +141,7 @@ void Application::setupInfo()
 		return std::regex_match(str, std::regex("^([4-9]|[1-9]\\d{1,})$"));
 	});
 	
-	label = new Label("PopSizeLabel", "Pop Size");
+	Label *label = new Label("PopSizeLabel", "Pop Size");
 	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
 	textField->addChildWidget(label);
 	
@@ -321,6 +270,299 @@ void Application::setupInfo()
 	label = new Label("MaxYLabel", "Max Y");
 	label->setAnchor(sf::Vector2f(1.0f, 0.5f), sf::Vector2f(5.0f, 0.0f), LEFT);
 	textField->addChildWidget(label);
+	
+	//Iteration Label
+	label = new Label("IterationLabel", "0");
+	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(0.0f, 320.0f), UPPER_LEFT);
+	infoBox->addChildWidget(label);
+	label->setTextSourceLambda([this]() -> std::string
+	{
+		return "Iteration: " + (evo ? std::to_string(evo->PopulationNumber()) : "");
+	});
+	
+	//Start Button
+	Button *button = new Button("StartButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(), UPPER_LEFT);
+	infoBox->addChildWidget(button);
+	
+	label = new Label("StartLabel", "Start");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this, button]()
+	{
+		setupEvo();
+		isSimulating = true;
+		canvas->getWidget<Button>("StartButton")->setIsActive(false);
+		canvas->getWidget<Button>("ResetButton")->setIsActive(true);
+		canvas->getWidget<Button>("PauseButton")->setIsActive(true);
+	});
+	
+	//Reset Button
+	button = new Button("ResetButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(), UPPER_LEFT);
+	button->setIsActive(false);
+	infoBox->addChildWidget(button);
+	
+	label = new Label("ResetLabel", "Reset");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		resetEvo();
+		isSimulating = false;
+		canvas->getWidget<Button>("StartButton")->setIsActive(true);
+		canvas->getWidget<Button>("ResetButton")->setIsActive(false);
+		canvas->getWidget<Button>("PauseButton")->setIsActive(false);
+	});
+	
+	//Pause Button
+	button = new Button("PauseButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.97f, 0.02f), sf::Vector2f(), UPPER_RIGHT);
+	button->setIsActive(false);
+	infoBox->addChildWidget(button);
+	
+	label = new Label("PauseLabel", "Pause");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		isSimulating = !isSimulating;
+		canvas->getWidget<Label>("PauseLabel")->setText(isSimulating ? "Pause" : "Unpause");
+	});
+	
+	//Selection Button
+	button = new Button("SelectionButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.98f), sf::Vector2f(), LOWER_LEFT);
+	button->setIsActive(true);
+	infoBox->addChildWidget(button);
+	
+	label = new Label("SelectionLabel", "Selection");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		canvas->getWidget<Box>("InfoBox")->setIsActive(false);
+		canvas->getWidget<Box>("SelectionBox")->setIsActive(true);
+	});
+}
+
+void Application::setupSelection()
+{
+	//Selection Box
+	Box *selectionBox = new Box("SelectionBox", sf::FloatRect(0.0f, 0.0f, 0.21875f, 1.0f));
+	selectionBox->setAnchor(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(), UPPER_LEFT);
+	selectionBox->setIsActive(false);
+	canvas->addChildWidget(selectionBox);
+	
+	//Accept Button
+	Button *button = new Button("AcceptButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.98f), sf::Vector2f(), LOWER_LEFT);
+	button->setIsActive(true);
+	selectionBox->addChildWidget(button);
+	
+	Label *label = new Label("AcceptLabel", "Accept");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		canvas->getWidget<Box>("InfoBox")->setIsActive(true);
+		canvas->getWidget<Box>("SelectionBox")->setIsActive(false);
+	});
+	
+	//Selection Label
+	label = new Label("SelectionLabel2", "");
+	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(), UPPER_LEFT);
+	selectionBox->addChildWidget(label);
+	label->setTextSourceLambda([this]() -> std::string
+	{
+		std::string str;
+		
+		switch(selection)
+		{
+			case ONE_FUN_SELECT:
+			{
+				str = "1-Function";
+				break;
+			}
+			case TWO_FUN_SELECT:
+			{
+				str = "2-Function";
+				break;
+			}
+			case DOMINATED_SELECT:
+			{
+				str = "Dominant";
+				break;
+			}
+			default:
+			{
+				str = "UNDEFINED VALUE";
+			}
+		}
+		
+		return "Selection: " + str;
+	});
+	
+	//1F Button
+	button = new Button("1FButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 40.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("1FLabel", "1-Function");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		selection = ONE_FUN_SELECT;
+	});
+	
+	//2F Button
+	button = new Button("2FButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 80.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("2FLabel", "2-Function");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		selection = TWO_FUN_SELECT;
+	});
+	
+	//Dominant Button
+	button = new Button("DominantButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 120.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("DominantLabel", "Dominant");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		selection = DOMINATED_SELECT;
+	});
+	
+	//Elite Label
+	label = new Label("EliteLabel", "");
+	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(0.0f, 160.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(label);
+	label->setTextSourceLambda([this]() -> std::string
+	{
+		std::string str;
+		
+		switch(elite)
+		{
+			case NO_ELITE:
+			{
+				str = "No Elite";
+				break;
+			}
+			case YES_ELITE:
+			{
+				str = "Yes Elite";
+				break;
+			}
+			default:
+			{
+				str = "UNDEFINED VALUE";
+			}
+		}
+		
+		return "Elite: " + str;
+	});
+	
+	//NoElite Button
+	button = new Button("NoEliteButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 200.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("NoEliteLabel", "No Elite");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		elite = NO_ELITE;
+	});
+	
+	//YesElite Button
+	button = new Button("YesEliteButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 240.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("YesEliteLabel", "Yes Elite");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		elite = YES_ELITE;
+	});
+	
+	//Recombination Label
+	label = new Label("RecombinationLabel", "");
+	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(0.0f, 280.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(label);
+	label->setTextSourceLambda([this]() -> std::string
+	{
+		std::string str;
+		
+		switch(recombination)
+		{
+			case RECOMBINE_STANDARD:
+			{
+				str = "Standard";
+				break;
+			}
+			case RECOMBINE_CENTER:
+			{
+				str = "Center";
+				break;
+			}
+			default:
+			{
+				str = "UNDEFINED VALUE";
+			}
+		}
+		
+		return "Recombination: " + str;
+	});
+	
+	//StandardRecombination Button
+	button = new Button("StandardRecombinationButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 320.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("StandardRecombinationLabel", "Standard");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		recombination = RECOMBINE_STANDARD;
+	});
+	
+	//CenterRecombination Button
+	button = new Button("CenterRecombinationButton", sf::Vector2f(110.0f, 30.0f));
+	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 360.0f), UPPER_LEFT);
+	selectionBox->addChildWidget(button);
+	
+	label = new Label("CenterRecombinationLabel", "Center");
+	label->setAnchor(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(), MIDDLE);
+	button->addChildWidget(label);
+	
+	button->setFunc([this]()
+	{
+		recombination = RECOMBINE_CENTER;
+	});
 }
 
 void Application::setupGraphs()
