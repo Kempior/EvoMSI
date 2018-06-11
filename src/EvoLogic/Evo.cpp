@@ -1,50 +1,41 @@
 #include <iostream>
 
 #include "EvoLogic/Evo.h"
+#include "EvoLogic/Enums.h"
 
 
-Evo::Evo(int popSize, int minX, int maxX, int minY, int maxY) : popSize(popSize), pop(popSize, minX, maxX, minY, maxY)/*, costs(new std::vector<std::pair<float, float>>)*/ {}
+Evo::Evo(int popSize, int minX, int maxX, int minY, int maxY) : popSize(popSize), pop(popSize, minX, maxX, minY, maxY) {}
 
 void Evo::NextGeneration() {
 	
 	Points();
 	Costs();
 	
-	int oneFunSelect =		0x1;
-	int twoFunSelect =		0x2;
-	int dominatedSelect =	0x4;
-	
-	int noElite =			0x8;
-	int yesElite =			0x10;
-	
-	int recombineStandard =	0x20;
-	int recombineCenter =	0x40;
-	
-	const int choice = twoFunSelect | yesElite | recombineCenter;
+	int choice = EvoTypes::ONE_FUN_SELECT | EvoTypes::YES_ELITE | EvoTypes::RECOMBINE_STANDARD;
 	
 	pop.Mutate(mutationMagnitude, mutationChance);
 	
 	// Select type
-	if (choice & oneFunSelect)
+	if (evoType & EvoTypes::ONE_FUN_SELECT)
 		pop.Select(populationNumber % 2 == 0 ? fun1 : fun2);
-	else if (choice & twoFunSelect)
+	else if (evoType & EvoTypes::TWO_FUN_SELECT)
 		pop.Select(fun1, fun2);
-	else if (choice & dominatedSelect)
+	else if (evoType & EvoTypes::DOMINATED_SELECT)
 		pop.DominatedSelect(fun1, fun2);
 	
 	// No or elite
-	if (choice & noElite) {
+	if (evoType & EvoTypes::NO_ELITE) {
 		// No elite, recombination
-		if (choice & recombineStandard)
+		if (evoType & EvoTypes::RECOMBINE_STANDARD)
 			pop.Recombine();
-		if (choice & recombineCenter)
+		if (evoType & EvoTypes::RECOMBINE_CENTER)
 			pop.RecombineCenter();
 	}
-	else if (choice & yesElite) {
+	else if (evoType & EvoTypes::YES_ELITE) {
 		// Elite, recombination
-		if (choice & recombineStandard)
+		if (evoType & EvoTypes::RECOMBINE_STANDARD)
 			pop.RecombineWithElite();
-		if (choice & recombineCenter)
+		if (choice & EvoTypes::RECOMBINE_CENTER)
 			pop.RecombineWithEliteCenter();
 	}
 	
@@ -57,4 +48,8 @@ const std::vector<std::pair<float, float>> *Evo::Points() const {
 
 const std::vector<std::pair<float, float>> *Evo::Costs() const {
 	return pop.Costs(fun1, fun2);
+}
+
+unsigned int Evo::PopulationNumber() const {
+	return populationNumber;
 }
