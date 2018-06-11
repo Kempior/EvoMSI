@@ -105,12 +105,16 @@ void Population::DominatedSelect(float (*f1)(float x, float u), float (*f2)(floa
 			// If j-th point is worse under both criteria
 			if ((*costs)[i].first < (*costs)[j].first && (*costs)[i].second < (*costs)[j].second) {
 				// Probably heavily unoptimized
+				costs->erase(costs->begin() + j);
 				population.erase(population.begin() + j);
+				if (i >= j)
+					i--;
+				j--;
 			}
 		}
 	}
 	
-	std::cout << population.size() << '\n';
+	//population.shrink_to_fit();
 }
 
 void Population::Mutate(float mutationMagnitude, float mutationChance) {
