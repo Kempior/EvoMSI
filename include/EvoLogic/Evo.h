@@ -12,8 +12,6 @@ private:
 	Population pop;
 	int populationNumber = 1;
 	
-	std::unique_ptr<std::vector<std::pair<float, float>>> costs;
-	
 public:
 	Evo(int popSize, int minX, int maxX, int minY, int maxY);
 	

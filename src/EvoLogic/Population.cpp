@@ -14,8 +14,8 @@
 
 const float PI_F = 3.14159265358979f;
 
-Population::Population(int popSize, float minX, float maxX, float minY, float maxY) : points(new std::vector<std::pair<float, float>>), size(popSize) {
-	constraints = new float[4] {minX, maxX, minY, maxY};
+Population::Population(int popSize, float minX, float maxX, float minY, float maxY) : constraints{{minX, maxX, minY, maxY}}, points(new std::vector<std::pair<float, float>>), costs(new std::vector<std::pair<float, float>>), size(popSize) {
+	//constraints = new float[4] {minX, maxX, minY, maxY};
 	
 	std::mt19937 gen(time(NULL));	//Standard mersenne_twister_engine
 	std::uniform_real_distribution<> randX(minX, maxX);
@@ -24,11 +24,6 @@ Population::Population(int popSize, float minX, float maxX, float minY, float ma
 	for(int i = 0; i < popSize; i++) {
 		population.push_back(Dot(randX(gen), randY(gen)));
 	}
-	
-#ifdef DEBUG_POPULATION_CPP
-	std::cout << "Generating starting population\n";
-	PrintElements();
-#endif
 }
 
 void Population::PrintElements() {
@@ -52,6 +47,19 @@ const std::vector<std::pair<float, float>> *Population::Points() const {
 	}
 	
 	return points.get();
+}
+
+const std::vector<std::pair<float, float>> *Population::Costs(float (*fun1)(float x, float u), float (*fun2)(float x, float y)) const {
+	
+	costs->clear();
+	
+	//const std::vector<std::pair<float, float>> *points = Points();
+	
+	for (auto &it : *points) {
+		costs->push_back(std::make_pair(fun1(it.first, it.second), fun2(it.first, it.second)));
+	}
+	
+	return costs.get();
 }
 
 void Population::SelectInPlace(std::vector<Dot> &vec, float (*fun)(float x, float y), float howMany) {
@@ -87,11 +95,22 @@ void Population::Select(float (*f1)(float x, float y), float (*f2)(float x, floa
 	
 	population.insert(population.end(), firstHalf.begin(), firstHalf.end());
 	population.insert(population.end(), secondHalf.begin(), secondHalf.end());
+}
+
+void Population::DominatedSelect(float (*f1)(float x, float u), float (*f2)(float x, float y)) {
+	Costs(f1, f2);
 	
-#ifdef DEBUG_POPULATION_CPP
-	std::cout << "\n\nSelecting (one function)\n";
-	PrintElements(fun);
-#endif
+	for(unsigned int i = 0; i < population.size(); i++) {
+		for (unsigned int j = 0; j < population.size() && i != j; j++) {
+			// If j-th point is worse under both criteria
+			if ((*costs)[i].first < (*costs)[j].first && (*costs)[i].second < (*costs)[j].second) {
+				// Probably heavily unoptimized
+				population.erase(population.begin() + j);
+			}
+		}
+	}
+	
+	std::cout << population.size() << '\n';
 }
 
 void Population::Mutate(float mutationMagnitude, float mutationChance) {
@@ -185,15 +204,46 @@ std::vector<Dot> Population::RecombineAndReturn(int howMany) {
 	return returnVec;
 }
 
+std::vector<Dot> Population::RecombineAndReturnCenter(int howMany) {
+	std::vector<Dot> returnVec;
+	
+	std::mt19937 gen(time(NULL));	//Standard mersenne_twister_engine
+	
+	// Used to calculate the magnitude of change from the center of parents
+	std::uniform_real_distribution<> randMagnitude(0, 1);
+	// Indexes of parents
+	std::uniform_int_distribution<> randIndex(0, population.size() - 1);
+	// For chance of rotation to right or left
+	std::bernoulli_distribution randBool(0.5);
+	
+	for (int i = 0; i < howMany; i++) {
+		int index1 = randIndex(gen);
+		int index2 = randIndex(gen);
+		
+		if (index1 == index2 || population.size() <= 1) {
+			i--;
+			continue;
+		}
+		
+		Dot parentsCenter = population[index1] + (population[index2] - population[index1]) * randMagnitude(gen);
+		
+		if (parentsCenter.x < constraints[(int)Constraint::minX] ||
+			constraints[(int)Constraint::maxX] < parentsCenter.x ||
+			parentsCenter.y < constraints[(int)Constraint::minY] ||
+			constraints[(int)Constraint::maxY] < parentsCenter.y) {
+			i--;
+			continue;
+		}
+		else {
+			returnVec.push_back(parentsCenter);
+		}
+	}
+	
+	return returnVec;
+}
+
 void Population::Recombine() {
-	std::cout << "\n\nRecombination\n";
-	
 	population = RecombineAndReturn(size);
-	
-#ifdef DEBUG_POPULATION_CPP
-	std::cout << "\n\nRecombination\n";
-	PrintElements();
-#endif
 }
 
 void Population::RecombineWithElite() {
@@ -201,9 +251,15 @@ void Population::RecombineWithElite() {
 	
 	population.reserve(population.size() + newDots.size());
 	population.insert(population.end(), newDots.begin(), newDots.end());
+}
+
+void Population::RecombineCenter() {
+	population = RecombineAndReturnCenter(size);
+}
+
+void Population::RecombineWithEliteCenter() {
+	std::vector<Dot> newDots = RecombineAndReturnCenter(size - population.size());
 	
-#ifdef DEBUG_POPULATION_CPP
-	std::cout << "\n\nRecombination (elite)\n";
-	PrintElements();
-#endif
+	population.reserve(population.size() + newDots.size());
+	population.insert(population.end(), newDots.begin(), newDots.end());
 }
