@@ -376,7 +376,7 @@ void Application::setupSelection()
 	
 	//Selection Label
 	label = new Label("SelectionLabel2", "");
-	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(), UPPER_LEFT);
+	label->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(), UPPER_LEFT);
 	selectionBox->addChildWidget(label);
 	label->setTextSourceLambda([this]() -> std::string
 	{
@@ -410,7 +410,7 @@ void Application::setupSelection()
 	
 	//1F Button
 	button = new Button("1FButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 40.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 20.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("1FLabel", "1-Function");
@@ -424,7 +424,7 @@ void Application::setupSelection()
 	
 	//2F Button
 	button = new Button("2FButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 80.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 60.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("2FLabel", "2-Function");
@@ -438,7 +438,7 @@ void Application::setupSelection()
 	
 	//Dominant Button
 	button = new Button("DominantButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 120.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 100.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("DominantLabel", "Dominant");
@@ -452,7 +452,7 @@ void Application::setupSelection()
 	
 	//Elite Label
 	label = new Label("EliteLabel", "");
-	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(0.0f, 160.0f), UPPER_LEFT);
+	label->setAnchor(sf::Vector2f(0.03, 0.005f), sf::Vector2f(0.0f, 140.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(label);
 	label->setTextSourceLambda([this]() -> std::string
 	{
@@ -481,7 +481,7 @@ void Application::setupSelection()
 	
 	//NoElite Button
 	button = new Button("NoEliteButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 200.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 160.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("NoEliteLabel", "No Elite");
@@ -495,7 +495,7 @@ void Application::setupSelection()
 	
 	//YesElite Button
 	button = new Button("YesEliteButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 240.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 200.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("YesEliteLabel", "Yes Elite");
@@ -509,7 +509,7 @@ void Application::setupSelection()
 	
 	//Recombination Label
 	label = new Label("RecombinationLabel", "");
-	label->setAnchor(sf::Vector2f(0.03, 0.02f), sf::Vector2f(0.0f, 280.0f), UPPER_LEFT);
+	label->setAnchor(sf::Vector2f(0.03, 0.005f), sf::Vector2f(0.0f, 240.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(label);
 	label->setTextSourceLambda([this]() -> std::string
 	{
@@ -538,7 +538,7 @@ void Application::setupSelection()
 	
 	//StandardRecombination Button
 	button = new Button("StandardRecombinationButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 320.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 260.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("StandardRecombinationLabel", "Standard");
@@ -552,7 +552,7 @@ void Application::setupSelection()
 	
 	//CenterRecombination Button
 	button = new Button("CenterRecombinationButton", sf::Vector2f(110.0f, 30.0f));
-	button->setAnchor(sf::Vector2f(0.03f, 0.02f), sf::Vector2f(0.0f, 360.0f), UPPER_LEFT);
+	button->setAnchor(sf::Vector2f(0.03f, 0.005f), sf::Vector2f(0.0f, 300.0f), UPPER_LEFT);
 	selectionBox->addChildWidget(button);
 	
 	label = new Label("CenterRecombinationLabel", "Center");

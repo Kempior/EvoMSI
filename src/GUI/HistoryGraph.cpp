@@ -8,10 +8,6 @@ rect(rect)
 	graphView.setViewport(rect);
 	setView();
 	
-	const float lineSize = 0.05f;
-	
-	horizontalLine.setSize(sf::Vector2f(200.0f, lineSize));
-	
 	horizontalLine.setFillColor(sf::Color::Black);
 	verticalLine.setFillColor(sf::Color::Black);
 	
@@ -154,6 +150,9 @@ void HistoryGraph::setView()
 	const float verticalSize = 0.001f;
 	verticalLine.setSize(sf::Vector2f(iteration * verticalSize, -20.0f));
 	
-	graphView.setCenter(iteration / 2.0f, -5.0f);
-	graphView.setSize(iteration * 1.02f, 12.0f);
+	const float horizontalSize = 0.1f;
+	horizontalLine.setSize(sf::Vector2f(iteration, horizontalSize));
+	
+	graphView.setCenter(iteration / 2.0f, -9.0f);
+	graphView.setSize(iteration * 1.02f, 22.0f);
 }
